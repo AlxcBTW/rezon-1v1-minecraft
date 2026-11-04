@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache">
 <title>Rezon 1v1 Minecraft 3D</title>
 </head>
 <body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0b1630;color:#e8f0ff;font:16px system-ui,sans-serif">
 <a id="go" href="https://bloxelizer.com/viewer?url=https%3A%2F%2Fraw.githubusercontent.com%2FAlxcBTW%2Frezon-1v1-minecraft%2Fmain%2Frezon_1v1_arena.litematic" style="color:#9fd3ff">3D-Ansicht öffnen</a>
 <script>
-// Always open the newest version: look up the latest commit, then load that exact file (no stale cache).
+// latest.json holds the commit of the newest arena file; fetched uncached so every visit opens the newest version.
 const repo = "AlxcBTW/rezon-1v1-minecraft", file = "rezon_1v1_arena.litematic";
 const go = ref => location.replace("https://bloxelizer.com/viewer?url=" +
   encodeURIComponent(`https://raw.githubusercontent.com/${repo}/${ref}/${file}`));
-fetch(`https://api.github.com/repos/${repo}/commits/main`, { cache: "no-store" })
+fetch("latest.json?t=" + Date.now(), { cache: "no-store" })
   .then(r => r.ok ? r.json() : Promise.reject())
   .then(j => go(j.sha))
   .catch(() => go("main"));
